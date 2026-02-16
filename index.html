@@ -1581,6 +1581,156 @@ h3 {
   font-weight: 500;
 }
 
+.page-shell {
+  position: relative;
+}
+
+.page-main {
+  min-width: 0;
+  padding-right: var(--rail-width, 64px);
+  transition: padding-right 0.2s ease;
+}
+
+body.pane-open .page-main {
+  padding-right: calc(var(--rail-width, 64px) + var(--pane-width, 320px));
+}
+
+.topbar-inner {
+  padding-right: calc(24px + var(--rail-width, 64px));
+}
+
+body.pane-open .topbar-inner {
+  padding-right: calc(24px + var(--rail-width, 64px) + var(--pane-width, 320px));
+}
+
+.side-rail {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: var(--rail-width, 64px);
+  padding: 84px 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  background: #ffffff;
+  border-left: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: -6px 0 18px rgba(15, 23, 42, 0.08);
+  z-index: 900;
+}
+
+.side-slot {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 12px;
+  background: #f7f7f6;
+  color: var(--gray-dark);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 12px 0;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.side-slot[aria-selected="true"] {
+  background: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(0, 120, 212, 0.28);
+}
+
+.side-slot:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.side-pane {
+  position: fixed;
+  top: 0;
+  right: var(--rail-width, 64px);
+  height: 100vh;
+  width: var(--pane-width, 320px);
+  padding: 84px 20px 20px;
+  background: #ffffff;
+  border-left: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: -10px 0 24px rgba(15, 23, 42, 0.1);
+  transform: translateX(100%);
+  transition: transform 0.2s ease;
+  z-index: 890;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+body.pane-open .side-pane {
+  transform: translateX(0);
+}
+
+.side-pane-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.side-pane-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+.side-pane-close {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #f7f7f6;
+  color: var(--gray-dark);
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.side-pane-body {
+  font-size: 1rem;
+  color: var(--gray-dark);
+  flex: 1;
+  min-height: 0;
+}
+
+.side-pane-body iframe {
+  display: block;
+  border: none;
+}
+
+@media (max-width: 900px) {
+  .side-rail {
+    width: 56px;
+  }
+
+  .side-slot {
+    font-size: 0.8rem;
+  }
+
+  .side-pane {
+    width: min(320px, 78vw);
+  }
+
+  .page-main {
+    padding-right: 56px;
+  }
+
+  body.pane-open .page-main {
+    padding-right: calc(56px + min(320px, 78vw));
+  }
+
+  .topbar-inner {
+    padding-right: calc(24px + 56px);
+  }
+
+  body.pane-open .topbar-inner {
+    padding-right: calc(24px + 56px + min(320px, 78vw));
+  }
+}
+
 /* Copilot visual guide */
 .copilot-map{
   margin: 1.8rem 0 2.4rem;
@@ -1677,8 +1827,23 @@ h3 {
 </header>
 
 
+<div class="page-shell">
+  <div class="side-rail" role="tablist" aria-label="Agent slots">
+    <button class="side-slot" type="button" data-agent="1" aria-selected="false">🔍</button>
+    <button class="side-slot" type="button" data-agent="2" aria-selected="false">🧠</button>
+    <button class="side-slot" type="button" data-agent="3" aria-selected="false">🔰</button>
+  </div>
 
-  <div class="container">
+  <aside class="side-pane" aria-hidden="true">
+    <div class="side-pane-header">
+      <div class="side-pane-title" id="sidePaneTitle">Agent 1</div>
+      <button class="side-pane-close" type="button" aria-label="Close pane">Close</button>
+    </div>
+    <div class="side-pane-body" id="sidePaneBody">Agent 1</div>
+  </aside>
+
+  <main class="page-main">
+    <div class="container">
     <div class="intro">
       <h2>Welcome to Agent-to-Agent-to-Impact</h2>
       <h3>A human-centered Copilot build sprint</h3>
@@ -3459,6 +3624,8 @@ Keep the summary compact, structured, and easy to copy.
       </div>
     </section>
   </div>
+  </main>
+</div>
 
 
   <script>
@@ -3527,6 +3694,65 @@ function toggleExample(button) {
       });
     });
   });
+</script>
+
+<script>
+  (function () {
+    const slots = Array.from(document.querySelectorAll(".side-slot"));
+    const pane = document.querySelector(".side-pane");
+    const paneTitle = document.getElementById("sidePaneTitle");
+    const paneBody = document.getElementById("sidePaneBody");
+    const closeButton = document.querySelector(".side-pane-close");
+
+    if (!slots.length || !pane || !paneTitle || !paneBody) return;
+
+    const openPane = (agentNumber) => {
+      const label = `Agent ${agentNumber}`;
+      paneTitle.textContent = label;
+
+      if (agentNumber === "1") {
+        paneBody.innerHTML =
+          '<iframe src="https://copilotstudio.preview.microsoft.com/environments/ca5225c7-5933-e6d1-8103-4d9e8028ba17/bots/copilots_header_00040/webchat?__version__=2%22" frameborder="0" style="width: 100%; height: 100%;"></iframe>';
+      } else if (agentNumber === "2") {
+        paneBody.innerHTML =
+          '<iframe src="https://copilotstudio.preview.microsoft.com/environments/ca5225c7-5933-e6d1-8103-4d9e8028ba17/bots/copilots_header_6e5ce/webchat?__version__=2%22" frameborder="0" style="width: 100%; height: 100%;"></iframe>';
+      } else if (agentNumber === "3") {
+        paneBody.innerHTML =
+          '<iframe src="https://copilotstudio.preview.microsoft.com/environments/ca5225c7-5933-e6d1-8103-4d9e8028ba17/bots/copilots_header_4ddba/webchat?__version__=2%22" frameborder="0" style="width: 100%; height: 100%;"></iframe>';
+      } else {
+        paneBody.textContent = label;
+      }
+
+      pane.setAttribute("aria-hidden", "false");
+      document.body.classList.add("pane-open");
+    };
+
+    const closePane = () => {
+      pane.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("pane-open");
+      slots.forEach(slot => slot.setAttribute("aria-selected", "false"));
+    };
+
+    slots.forEach(slot => {
+      slot.addEventListener("click", () => {
+        const isSelected = slot.getAttribute("aria-selected") === "true";
+        const agentNumber = slot.getAttribute("data-agent");
+
+        if (isSelected) {
+          closePane();
+          return;
+        }
+
+        slots.forEach(other => other.setAttribute("aria-selected", "false"));
+        slot.setAttribute("aria-selected", "true");
+        openPane(agentNumber);
+      });
+    });
+
+    if (closeButton) {
+      closeButton.addEventListener("click", closePane);
+    }
+  })();
 </script>
 
 </body>
