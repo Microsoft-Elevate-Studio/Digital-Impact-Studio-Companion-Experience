@@ -272,11 +272,15 @@
     }
 
     .entry-label-button {
+      display: inline-block;
       background: none;
       border: none;
       padding: 0;
       cursor: pointer;
       text-align: left;
+      font: inherit;
+      color: inherit;
+      line-height: inherit;
     }
 
     .entry-label-button:hover {
@@ -1991,6 +1995,7 @@ body.pane-open .side-pane {
 
     <button class="entry-label entry-label-button" type="button" data-open-agent="1">1. Open the agent</button>
     <a
+     href="https://copilotstudio.preview.microsoft.com/environments/ca5225c7-5933-e6d1-8103-4d9e8028ba17/bots/copilots_header_00040/canvas?__version__=2&enableFileAttachment=true"
       class="open-agent-link open-agent-btn" data-open-agent="1">
       Open agent <span aria-hidden="true">→</span>
     </a>
@@ -2778,6 +2783,7 @@ body.pane-open .side-pane {
     <!-- Step 1 -->
     <button class="entry-label entry-label-button" type="button" data-open-agent="2">1. Open the agent</button>
     <a
+      href="https://copilotstudio.preview.microsoft.com/environments/ca5225c7-5933-e6d1-8103-4d9e8028ba17/bots/copilots_header_6e5ce/canvas?__version__=2&enableFileAttachment=true"
       class="open-agent-link open-agent-btn" data-open-agent="2">
       Open agent <span aria-hidden="true">→</span>
     </a>
@@ -3393,6 +3399,9 @@ Keep the summary compact, structured, and easy to copy.
 
     <!-- STEP 2 -->
     <button class="entry-label entry-label-button" type="button" data-open-agent="3">2. Open the DIS Trust & Safety Agent</button>
+    <a href="https://copilotstudio.preview.microsoft.com/environments/ca5225c7-5933-e6d1-8103-4d9e8028ba17/bots/copilots_header_4ddba/canvas?__version__=2&enableFileAttachment=true" class="open-agent-link open-agent-btn" data-open-agent="3">
+      Open the agent <span aria-hidden="true">→</span>
+    </a>
     
     <br> <br>
 
@@ -3762,7 +3771,11 @@ function toggleExample(button) {
     }
 
     openTriggers.forEach(trigger => {
-      trigger.addEventListener("click", () => {
+      trigger.addEventListener("click", (event) => {
+        if (trigger.tagName === "A") {
+          event.preventDefault();
+        }
+
         const agentNumber = trigger.getAttribute("data-open-agent");
         const slot = document.querySelector(`.side-slot[data-agent="${agentNumber}"]`);
         if (slot) {
