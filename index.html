@@ -271,6 +271,18 @@
       font-weight: 600;
     }
 
+    .entry-label-button {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .entry-label-button:hover {
+      text-decoration: underline;
+    }
+
     .entry-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -1836,7 +1848,7 @@ body.pane-open .side-pane {
 
   <aside class="side-pane" aria-hidden="true">
     <div class="side-pane-header">
-      <div class="side-pane-title" id="sidePaneTitle"></div>
+      <div class="side-pane-title" id="sidePaneTitle">Agent 1</div>
       <button class="side-pane-close" type="button" aria-label="Close pane">Close</button>
     </div>
     <div class="side-pane-body" id="sidePaneBody">Agent 1</div>
@@ -1977,7 +1989,7 @@ body.pane-open .side-pane {
       </div>
     </div>
 
-    <p class="entry-label">1. Open the agent</p>
+    <button class="entry-label entry-label-button" type="button" data-open-agent="1">1. Open the agent</button>
     <a
      href="https://copilotstudio.preview.microsoft.com/environments/ca5225c7-5933-e6d1-8103-4d9e8028ba17/bots/copilots_header_00040/canvas?__version__=2&enableFileAttachment=true"
       class="open-agent-link open-agent-btn">
@@ -2765,7 +2777,7 @@ body.pane-open .side-pane {
     </div>
 
     <!-- Step 1 -->
-    <p class="entry-label">1. Open the agent</p>
+    <button class="entry-label entry-label-button" type="button" data-open-agent="2">1. Open the agent</button>
     <a
       href="https://copilotstudio.preview.microsoft.com/environments/ca5225c7-5933-e6d1-8103-4d9e8028ba17/bots/copilots_header_6e5ce/canvas?__version__=2&enableFileAttachment=true"
       class="open-agent-link open-agent-btn">
@@ -3382,7 +3394,7 @@ Keep the summary compact, structured, and easy to copy.
 
 
     <!-- STEP 2 -->
-    <p class="entry-label">2. Open the DIS Trust & Safety Agent</p>
+    <button class="entry-label entry-label-button" type="button" data-open-agent="3">2. Open the DIS Trust & Safety Agent</button>
     <a href="https://copilotstudio.preview.microsoft.com/environments/ca5225c7-5933-e6d1-8103-4d9e8028ba17/bots/copilots_header_4ddba/canvas?__version__=2&enableFileAttachment=true" class="open-agent-link open-agent-btn">
       Open the agent <span aria-hidden="true">→</span>
     </a>
@@ -3703,6 +3715,7 @@ function toggleExample(button) {
     const paneTitle = document.getElementById("sidePaneTitle");
     const paneBody = document.getElementById("sidePaneBody");
     const closeButton = document.querySelector(".side-pane-close");
+    const openTriggers = Array.from(document.querySelectorAll("[data-open-agent]"));
 
     if (!slots.length || !pane || !paneTitle || !paneBody) return;
 
@@ -3752,6 +3765,16 @@ function toggleExample(button) {
     if (closeButton) {
       closeButton.addEventListener("click", closePane);
     }
+
+    openTriggers.forEach(trigger => {
+      trigger.addEventListener("click", () => {
+        const agentNumber = trigger.getAttribute("data-open-agent");
+        const slot = document.querySelector(`.side-slot[data-agent="${agentNumber}"]`);
+        if (slot) {
+          slot.click();
+        }
+      });
+    });
   })();
 </script>
 
