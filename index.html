@@ -3203,73 +3203,138 @@ body.pane-open .side-pane {
   <h3>Paste and test your agent</h3>
 
   <p class="flow-text">
-    Use the output from the Agent Builder to create and test your agent inside Copilot.
+    Use the output from the DIS Instruction Generator Agent to create and test your agent inside Copilot.
     No new decisions are needed — you’re applying what you already defined.
   </p>
 
   <div class="instructions-wrapper">
+          <div class="prompt-divider"><span> Where to start</span></div>
+          <div class="prompt-instruction-box"><strong> Instruction:</strong> How you start depends on where you’re opening Copilot (via Web or Teams).
+Follow the path that matches your setup — both will take you to Agent Builder.</div>
 
-    <!-- Step 1 -->
-    <div class="instruction-step">
-      <div class="instruction-step-number">Step 1</div>
-      <div class="instruction-step-text">
-        Open <strong>Microsoft Teams</strong>.
-      </div>
+    <!-- PATH A — Teams app -->
+  <div class="instruction-subhead">Path A — Microsoft Teams (app)</div>
+
+  <div class="instruction-step">
+    <div class="instruction-step-number">Step 1</div>
+    <div class="instruction-step-text">
+      Open <strong>Microsoft Teams</strong>.
+      <!-- Optional image -->
+      <!-- <img class="instruction-img" src="images/teams-open.png" alt="Open Microsoft Teams" /> -->
     </div>
+  </div>
 
-    <!-- Step 2 -->
-    <div class="instruction-step">
-      <div class="instruction-step-number">Step 2</div>
-      <div class="instruction-step-text">
-        Click <strong>Copilot</strong> from the right-hand sidebar.
-      </div>
+  <div class="instruction-step">
+    <div class="instruction-step-number">Step 2</div>
+    <div class="instruction-step-text">
+      From the left sidebar, click <strong>Copilot</strong>.
+      <!-- Optional image -->
+      <!-- <img class="instruction-img" src="images/teams-sidebar-copilot.png" alt="Copilot in Teams sidebar" /> -->
     </div>
+  </div>
 
-    <!-- Step 3 -->
-    <div class="instruction-step">
-      <div class="instruction-step-number">Step 3</div>
-      <div class="instruction-step-text">
-        Inside Copilot, select <strong>Create an agent</strong>
-        to open <strong>Agent Builder</strong>.
-      </div>
+  <div class="instruction-step">
+    <div class="instruction-step-number">Step 3</div>
+    <div class="instruction-step-text">
+      Inside Copilot, click <strong>Create an agent</strong> to open <strong>Agent Builder</strong>.
+      <!-- Optional image -->
+      <!-- <img class="instruction-img" src="images/teams-create-agent.png" alt="Create an agent in Teams Copilot" /> -->
     </div>
+  </div>
 
-    <!-- Step 4 -->
-      <div class="instruction-step">
+  <div class="instruction-divider"></div>
+
+  <!-- PATH B — Copilot web -->
+  <div class="instruction-subhead">Path B — Copilot Chat (web)</div>
+
+  <div class="instruction-step">
+    <div class="instruction-step-number">Step 1</div>
+    <div class="instruction-step-text">
+      Open a new browser tab and go to <strong>Copilot Chat (web)</strong>. Sign in if needed.
+      <!-- Optional image -->
+      <!-- <img class="instruction-img" src="images/copilot-web-home.png" alt="Copilot web homepage" /> -->
+    </div>
+  </div>
+
+  <div class="instruction-step">
+    <div class="instruction-step-number">Step 2</div>
+    <div class="instruction-step-text">
+      From the left sidebar, click <strong>New agent</strong>.
+      <!-- Optional image -->
+      <!-- <img class="instruction-img" src="images/copilot-web-new-agent.png" alt="New agent on Copilot web" /> -->
+    </div>
+  </div>
+
+  <div class="instruction-divider"></div>
+
+  <!-- CONVERGENCE -->
+  <div class="instruction-subhead">Once Agent Builder is open</div>
+
+  <div class="instruction-step">
+    <div class="instruction-step-number">Next</div>
+    <div class="instruction-step-text">
+      You’ll see a large text field at the top of the page. This is the <strong>Describe</strong> field — paste your output there.
+      <br />
+      <span class="muted">
+        (Not the <strong>Description</strong> field under Configure. Not the <strong>Instructions</strong> field.)
+      </span>
+      <!-- Optional image (recommended) -->
+      <!-- <img class="instruction-img" src="images/agent-builder-describe-field.png" alt="Describe field in Agent Builder" /> -->
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="instruction-step">
     <div class="instruction-step-number">Step 4</div>
     <div class="instruction-step-text">
-      You’ll see a text field where Agent Builder expects input.
-      This is where your agent instructions will go.
+      You’ll see a large text field at the top of Agent Builder. 
+      This is the <strong>Describe</strong> field — this is where your agent instructions go.
+      <br />
+      <span class="muted">
+        (Not the <strong>Description</strong> field under Configure. Not the <strong>Instructions</strong> field.)
+      </span>
+      <!-- Optional image (recommended) -->
+      <!-- <img class="instruction-img" src="images/agent-builder-describe-field.png" alt="Describe field in Agent Builder" /> -->
     </div>
   </div>
 
-    <!-- Step 5 -->
-   <div class="instruction-step">
-      <div class="instruction-step-number">Step 2</div>
-      <div class="instruction-step-text">
-        Paste the <strong>first code block of instructions</strong> into the <strong>Describe</strong> field,
-        exactly as generated.
-      </div>
+  <!-- STEP 5 -->
+  <div class="instruction-step">
+    <div class="instruction-step-number">Step 5</div>
+    <div class="instruction-step-text">
+      Paste the <strong>first code block of instructions</strong> into the <strong>Describe</strong> field, exactly as generated.
     </div>
-
-    <!-- Step 6 -->
-   <div class="instruction-step">
-      <div class="instruction-step-number">Step 3</div>
-      <div class="instruction-step-text">
-        Paste the <strong>second block of instructions</strong> right after the first one.
-      </div>
-    </div>
-
-
-    <!-- Step 7 -->
-    <div class="instruction-step">
-      <div class="instruction-step-number">Step 4</div>
-      <div class="instruction-step-text">
-        Save the agent and test it with a few realistic prompts to confirm the behavior.
-      </div>
-    </div>
-
   </div>
+
+  <!-- STEP 6 -->
+  <div class="instruction-step">
+    <div class="instruction-step-number">Step 6</div>
+    <div class="instruction-step-text">
+      Paste the <strong>second code block of instructions</strong> immediately after the first one in the same <strong>Describe</strong> field.
+    </div>
+  </div>
+
+  <!-- STEP 7 -->
+  <div class="instruction-step">
+    <div class="instruction-step-number">Step 7</div>
+    <div class="instruction-step-text">
+      If you accidentally switched to <strong>Configure</strong>, you can switch back to <strong>Describe</strong> at any time using the top toggle.
+      <!-- Optional image (recommended) -->
+      <!-- <img class="instruction-img" src="images/describe-configure-toggle.png" alt="Switch between Describe and Configure" /> -->
+    </div>
+  </div>
+
+  <!-- STEP 8 -->
+  <div class="instruction-step">
+    <div class="instruction-step-number">Step 8</div>
+    <div class="instruction-step-text">
+      Click <strong>Save</strong>, then test your agent with a few realistic prompts to confirm the behavior.
+      <br /><br />
+      You can ask <strong>Agent 2</strong> to generate example test prompts based on your use case if you’re unsure what to try.
+    </div>
+  </div>
+
+    
 </section>
 
 
