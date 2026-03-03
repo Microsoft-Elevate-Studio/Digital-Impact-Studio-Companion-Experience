@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1840,6 +1841,83 @@ body.pane-open .side-pane {
   display: block;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
+
+    .landing-access {
+      max-width: 760px;
+      margin: 32px auto 24px;
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    .landing-access h2 {
+      margin: 0 0 10px;
+      color: var(--primary-dark);
+      font-size: 1.5rem;
+    }
+
+    .landing-access p {
+      margin: 0 0 12px;
+      color: var(--gray-dark);
+      line-height: 1.5;
+    }
+
+    .landing-access-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .landing-access-input {
+      flex: 1 1 320px;
+      min-height: 42px;
+      border: 1px solid rgba(0, 0, 0, 0.18);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.98rem;
+    }
+
+    .landing-access-btn {
+      min-height: 42px;
+      border: none;
+      border-radius: 10px;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 700;
+      padding: 10px 16px;
+      cursor: pointer;
+    }
+
+    .landing-access-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .landing-access-error {
+      margin-top: 10px;
+      color: #b42318;
+      font-size: 0.92rem;
+      min-height: 1.2em;
+    }
+
+    .content-extension {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin: 12px 0 18px;
+    }
+
+    .content-extension h3 {
+      margin: 0 0 8px;
+      color: var(--primary-dark);
+    }
+
+    .content-extension p {
+      margin: 0;
+    }
     
   </style>
 </head>
@@ -1864,7 +1942,26 @@ body.pane-open .side-pane {
 </header>
 
 
-<div class="page-shell">
+<section class="landing-access" id="landingAccess">
+  <h2>Landing Home</h2>
+  <p><strong>To request access please reach out to 'DigitalImpactStudio@microsoft.com'.</strong></p>
+  <p>Enter the base password to access the full content.</p>
+
+  <form class="landing-access-form" id="accessForm">
+    <input
+      type="password"
+      id="accessPassword"
+      class="landing-access-input"
+      placeholder="Enter base password"
+      autocomplete="off"
+      required
+    >
+    <button type="submit" class="landing-access-btn">Access Content</button>
+  </form>
+  <div class="landing-access-error" id="accessError" aria-live="polite"></div>
+</section>
+
+<div class="page-shell" id="protectedContent" hidden>
   <div class="side-rail" role="tablist" aria-label="Agent slots">
     <button class="side-slot" type="button" data-agent="1" aria-selected="false">🔍</button>
     <button class="side-slot" type="button" data-agent="2" aria-selected="false">🧠</button>
@@ -1881,6 +1978,11 @@ body.pane-open .side-pane {
 
   <main class="page-main">
     <div class="container">
+    <section class="content-extension" id="content-extension">
+      <h3>Content Extension Starter</h3>
+      <p>This section is ready for additional home page content.</p>
+    </section>
+
     <div class="intro">
       <h2>Welcome to Agent-to-Agent-to-Impact</h2>
       <h3>A human-centered Copilot build sprint</h3>
@@ -3734,6 +3836,48 @@ Keep the summary compact, structured, and easy to copy.
   </div>
   </main>
 </div>
+
+
+  <script>
+  (function () {
+    const ACCESS_PASSWORD = "D!g!t@l!mp@ctStud!o_@gents";
+    const SESSION_KEY = "dis-base-access";
+
+    const landingAccess = document.getElementById("landingAccess");
+    const protectedContent = document.getElementById("protectedContent");
+    const accessForm = document.getElementById("accessForm");
+    const accessPassword = document.getElementById("accessPassword");
+    const accessError = document.getElementById("accessError");
+
+    if (!landingAccess || !protectedContent || !accessForm || !accessPassword || !accessError) return;
+
+    const unlock = () => {
+      landingAccess.hidden = true;
+      protectedContent.hidden = false;
+    };
+
+    if (sessionStorage.getItem(SESSION_KEY) === "true") {
+      unlock();
+      return;
+    }
+
+    accessForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (accessPassword.value === ACCESS_PASSWORD) {
+        sessionStorage.setItem(SESSION_KEY, "true");
+        accessError.textContent = "";
+        accessPassword.value = "";
+        unlock();
+        return;
+      }
+
+      accessError.textContent = "Incorrect password. Please try again or contact DigitalImpactStudio@microsoft.com.";
+      accessPassword.focus();
+      accessPassword.select();
+    });
+  })();
+</script>
 
 
   <script>
