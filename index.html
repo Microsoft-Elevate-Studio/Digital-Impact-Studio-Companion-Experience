@@ -3844,7 +3844,8 @@ Keep the summary compact, structured, and easy to copy.
 
   <script>
   (function () {
-    const ACCESS_PASSWORD = "StudioAgent";
+    // SHA-256 hash of the access password (password itself is not stored here)
+    const ACCESS_HASH = "8e4cb56135e2f6e43f740486448477d74489c58f7374f452e1f59f8f44fa67db";
     const SESSION_KEY = "dis-base-access";
 
     const landingAccess = document.getElementById("landingAccess");
@@ -3865,10 +3866,19 @@ Keep the summary compact, structured, and easy to copy.
       return;
     }
 
-    accessForm.addEventListener("submit", (event) => {
+    async function hashInput(input) {
+      const encoded = new TextEncoder().encode(input);
+      const hashBuffer = await crypto.subtle.digest("SHA-256", encoded);
+      return Array.from(new Uint8Array(hashBuffer))
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
+    }
+
+    accessForm.addEventListener("submit", async (event) => {
       event.preventDefault();
 
-      if (accessPassword.value === ACCESS_PASSWORD) {
+      const inputHash = await hashInput(accessPassword.value);
+      if (inputHash === ACCESS_HASH) {
         sessionStorage.setItem(SESSION_KEY, "true");
         accessError.textContent = "";
         accessPassword.value = "";
